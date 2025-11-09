@@ -2,6 +2,7 @@ import './style.css';
 import { loadTasks } from './modules/storage.js';
 import { renderTasks } from './modules/render.js';
 import { addTask } from './modules/add.js';
+import { clearCompleted } from './modules/status.js';
 
 // Get initial tasks from localStorage
 let tasks = loadTasks();
@@ -31,4 +32,10 @@ document.getElementById('new-task').addEventListener('keypress', (e) => {
             e.target.value = '';
         }
     }
+});
+
+// Clear completed tasks
+document.getElementById('clear-completed').addEventListener('click', () => {
+    clearCompleted();
+    renderTasks();
 });
