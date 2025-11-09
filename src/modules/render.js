@@ -2,6 +2,7 @@ import tasks from "./tasks.js";
 import { deleteTask } from "./delete.js";
 import { saveTasks } from "./storage.js";
 import { editTask } from "./edit.js";
+import { updateStatus, clearCompleted } from "./status.js";
 
 export const renderTasks = () => {
     const todolist = document.getElementById('todo-list');
@@ -9,7 +10,7 @@ export const renderTasks = () => {
      
     tasks.forEach((task) => {
         const li = document.createElement('li');
-        li.className = 'task-item';
+        li.className = `task-item ${task.completed ? 'completed' : ''}`;
         li.innerHTML = `
             <input type="checkbox" ${task.completed ? 'checked' : ''} />
             <span class="task-text">${task.textinput}</span>
@@ -20,8 +21,8 @@ export const renderTasks = () => {
         // Add checkbox functionality
         const checkbox = li.querySelector('input[type="checkbox"]');
         checkbox.addEventListener('change', () => {
-            task.completed = checkbox.checked;
-            saveTasks();
+            updateStatus(task.index, checkbox.checked);
+            li.classList.toggle('completed', checkbox.checked);
         });
 
         // Add edit functionality
